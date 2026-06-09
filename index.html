@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Coastal Bank — Staff Performance</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--navy:#0A1628;--mid:#132240;--card:#1a2d4a;--accent:#1E3A5F;--gold:#C9A84C;--gold2:#e8c76a;--green:#1A7A4A;--amber:#D97706;--red:#C0392B;--white:#fff;--muted:#8FA3BF;--border:#1e3558}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--navy);color:#fff;min-height:100vh}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+#loginScreen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse at 50% 0%,#0d2040 0%,var(--navy) 70%)}
+.logo-wrap{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 40px rgba(201,168,76,.35);margin-bottom:14px}
+.logo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.app-title{font-size:26px;font-weight:900;letter-spacing:2px;text-align:center}
+.app-sub{font-size:11px;color:var(--gold);letter-spacing:1.5px;margin-top:4px;margin-bottom:24px;text-transform:uppercase;text-align:center}
+.login-box{background:var(--mid);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.lbl{display:block;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.8px;text-transform:uppercase;font-weight:600}
+.inp{width:100%;background:var(--accent);border:1.5px solid var(--border);border-radius:10px;padding:13px 14px;color:#fff;font-size:16px;outline:none;-webkit-appearance:none;margin-bottom:14px;display:block}
+.inp:focus{border-color:var(--gold)}
+.btn-login{width:100%;background:linear-gradient(135deg,#b8932a,var(--gold),var(--gold2));color:var(--navy);font-size:15px;font-weight:800;padding:16px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 4px 15px rgba(201,168,76,.4);min-height:50px;display:block}
+.err{color:#ff6b6b;font-size:12px;text-align:center;margin-top:10px;min-height:16px}
+.topbar{background:var(--mid);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;min-height:56px;gap:8px}
+.tb-l{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.back-btn{width:42px;height:42px;min-width:42px;background:var(--accent);border:1px solid var(--border);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-title{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-sub{font-size:10px;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-r{display:flex;gap:6px;flex-shrink:0}
+.btn-logout{background:transparent;border:1px solid rgba(192,57,43,.6);color:#e74c3c;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:600;min-height:38px}
+.btn-reset{background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.4);color:#e74c3c;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:11px;font-weight:600;min-height:38px}
+.content{padding:14px;max-width:680px;margin:0 auto;padding-bottom:60px}
+.sec-lbl{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin:20px 0 12px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.profile-card{background:linear-gradient(135deg,var(--mid),var(--card));border:1px solid var(--border);border-radius:18px;padding:18px;display:flex;align-items:center;gap:14px;margin-bottom:4px}
+.avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e3a5f,#0d2040);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--gold);flex-shrink:0}
+.p-name{font-size:16px;font-weight:800}
+.p-eid{font-size:11px;color:var(--gold);font-weight:700;margin-top:3px}
+.p-det{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.75}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tcard{background:var(--mid);border:1px solid var(--border);border-radius:13px;padding:13px}
+.tl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.tv{font-size:17px;font-weight:800;color:var(--gold);margin-top:4px}
+.ts{font-size:10px;color:var(--muted);margin-top:2px}
+.entry-form{background:linear-gradient(135deg,var(--mid),var(--card));border:1.5px solid var(--gold);border-radius:16px;padding:16px}
+.ef-title{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.erow{display:flex;gap:10px;margin-bottom:12px}
+.ef{flex:1}
+.ef label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;font-weight:600}
+.ef input{width:100%;background:var(--accent);border:1.5px solid var(--border);border-radius:10px;padding:13px;color:#fff;font-size:16px;font-weight:600;outline:none;-webkit-appearance:none;text-align:center}
+.ef input:focus{border-color:var(--gold)}
+.btn-save{width:100%;background:linear-gradient(135deg,#b8932a,var(--gold),var(--gold2));color:var(--navy);font-size:14px;font-weight:800;padding:15px;border:none;border-radius:12px;cursor:pointer;min-height:50px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:14px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{height:0}
+.tab{padding:9px 15px;border-radius:20px;border:1.5px solid var(--border);background:var(--mid);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:38px;display:flex;align-items:center}
+.tab.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.perf-card{background:var(--mid);border:1px solid var(--border);border-radius:16px;padding:16px}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.ph-title{font-size:14px;font-weight:700}
+.badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;color:#fff;white-space:nowrap}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px;gap:6px}
+.pl{color:var(--muted)}
+.pv{font-weight:600;text-align:right}
+.prog{height:7px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin:5px 0}
+.prog-fill{height:100%;border-radius:4px}
+.prog-lbl{font-size:11px;color:var(--muted);text-align:right;margin-bottom:8px}
+.hist-item{background:var(--mid);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px}
+.hist-date{font-size:12px;color:var(--gold);font-weight:700}
+.hist-row{display:flex;gap:24px;margin-top:7px}
+.hist-val .hv{font-size:15px;font-weight:700}
+.hist-val .hl{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-top:1px}
+.member-row{background:var(--mid);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;display:flex;align-items:center;gap:11px;cursor:pointer;min-height:66px}
+.member-row:active{border-color:var(--gold)}
+.m-avatar{width:42px;height:42px;min-width:42px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0d2040);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--gold)}
+.m-info{flex:1;min-width:0}
+.m-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-des{font-size:11px;color:var(--muted);margin-top:2px}
+.sum-card{background:linear-gradient(135deg,var(--mid),var(--card));border:1px solid var(--border);border-radius:18px;padding:18px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;gap:8px}
+.srow:last-child{border-bottom:none}
+.sl{color:var(--muted);flex-shrink:0}
+.sv{font-weight:600;text-align:right}
+.sv-gold{color:var(--gold);font-weight:700}
+.sv-green{color:#27ae60;font-weight:700}
+.sv-red{color:#e74c3c;font-weight:700}
+.circ-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0}
+.circ-svg-wrap{position:relative;width:120px;height:120px}
+.circ-svg-wrap svg{transform:rotate(-90deg)}
+.circ-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.circ-pct{font-size:24px;font-weight:900;line-height:1}
+.circ-lbl{font-size:10px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:4px}
+.sbox{background:var(--mid);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center}
+.sbox .sv2{font-size:21px;font-weight:900;color:var(--gold)}
+.sbox .sl2{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;font-weight:600}
+.br-card{background:var(--mid);border:1px solid var(--border);border-radius:15px;padding:15px;margin-bottom:10px;cursor:pointer}
+.br-card:active{border-color:var(--gold)}
+.br-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
+.br-name{font-size:15px;font-weight:800}
+.br-mgr{font-size:11px;color:var(--muted);margin-top:3px}
+.br-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.br-stat .bl{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600}
+.br-stat .bv{font-size:13px;font-weight:700;margin-top:2px}
+.nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
+.nav-card{background:var(--mid);border:1px solid var(--border);border-radius:15px;padding:16px;text-align:center;cursor:pointer}
+.nav-card:active{border-color:var(--gold)}
+.nav-icon{font-size:26px;margin-bottom:7px}
+.nav-title{font-size:13px;font-weight:700}
+.nav-desc{font-size:11px;color:var(--muted);margin-top:3px}
+.ana-row{background:var(--mid);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;cursor:pointer}
+.ana-row:active{border-color:var(--gold)}
+.ana-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
+.ana-name{font-size:14px;font-weight:700}
+.ana-branch{font-size:11px;color:var(--muted);margin-top:2px}
+.search-inp{width:100%;background:var(--mid);border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;color:#fff;font-size:16px;outline:none;margin-bottom:10px;-webkit-appearance:none;display:block}
+.frow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.fsel{background:var(--mid);border:1px solid var(--border);color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;cursor:pointer;outline:none;-webkit-appearance:none;font-weight:600}
+.dlg-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+.dlg{background:var(--mid);border:1.5px solid var(--gold);border-radius:20px;padding:24px;max-width:360px;width:100%}
+.dlg h3{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:16px}
+.drow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;gap:8px}
+.dactions{display:flex;gap:10px;margin-top:20px}
+.btn-cancel{flex:1;background:var(--accent);color:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;font-size:14px;font-weight:600;min-height:50px}
+.btn-confirm{flex:1;background:linear-gradient(135deg,#b8932a,var(--gold));color:var(--navy);border:none;border-radius:12px;padding:14px;cursor:pointer;font-size:14px;font-weight:800;min-height:50px}
+.btn-danger{flex:1;background:var(--red);color:#fff;border:none;border-radius:12px;padding:14px;cursor:pointer;font-size:14px;font-weight:800;min-height:50px}
+.edit-card{background:var(--mid);border:1.5px solid rgba(201,168,76,.35);border-radius:15px;padding:15px;margin-top:12px}
+.edit-card h3{font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:12px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 26px;border-radius:28px;font-size:14px;font-weight:700;z-index:9999;pointer-events:none;max-width:90vw;text-align:center;animation:tUp .3s ease}
+@keyframes tUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.loading{display:flex;align-items:center;justify-content:center;padding:60px 20px;gap:12px}
+.spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:13px}
+@media(max-width:480px){.content{padding:12px}.tgrid{grid-template-columns:1fr 1fr}.tb-title{font-size:13px}}
+@media(max-width:360px){.tgrid{grid-template-columns:1fr}.stats-row{grid-template-columns:1fr 1fr}.nav-grid{grid-template-columns:1fr}.erow{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN — visible by default -->
+<div id="loginScreen">
+  <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:380px">
+    <div class="logo-wrap">
+      <img src="logo.jpeg" alt="Coastal Bank Logo"/>
+    </div>
+    <div class="app-title">COASTAL BANK</div>
+    <div class="app-sub">Staff Performance Tracker · FY 2026-27</div>
+    <div class="login-box">
+      <p style="font-size:11px;color:var(--muted);text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px">🔒 Secure Login</p>
+      <label class="lbl">Employee ID</label>
+      <input class="inp" type="text" id="uid" placeholder="e.g. 784 or ADMIN" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="text"/>
+      <label class="lbl">Password</label>
+      <input class="inp" type="password" id="upw" placeholder="Enter your password" onkeydown="if(event.key==='Enter')login()"/>
+      <button class="btn-login" onclick="login()">LOGIN →</button>
+      <p id="lerr" class="err"></p>
+    </div>
+    <p style="margin-top:20px;font-size:10px;color:#2a3d55;text-align:center">v3.0 · FY 2026-27 · Coastal Bank</p>
+  </div>
+</div>
+
+<!-- APP SHELL — hidden until logged in -->
+<div id="appShell" class="hidden">
+  <div class="topbar">
+    <div class="tb-l" id="tbL">
+      <div><div class="tb-title" id="tbT"></div><div class="tb-sub" id="tbS"></div></div>
+    </div>
+    <div class="tb-r" id="tbR">
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="content" id="MC">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<!-- DIALOG -->
+<div id="DLG" class="dlg-bg hidden">
+  <div class="dlg">
+    <h3 id="DT">Confirm</h3>
+    <div id="DB"></div>
+    <div class="dactions">
+      <button class="btn-cancel" onclick="closeDlg()">Cancel</button>
+      <button class="btn-confirm" id="DOK">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// SUPABASE CLOUD CONFIG (shared data across all devices)
+// ═══════════════════════════════════════════
+var SUPA_URL = 'https://itlvilxldckxsvrzwhff.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0bHZpbHhsZGNreHN2cnp3aGZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA1ODUyMzcsImV4cCI6MjA0NjE2MTIzN30.cuCdCEMFwbwcOb56rsqmGI3GJ1nna04MPwdU9mOt5FM';
+var USE_CLOUD = (SUPA_URL !== '' && SUPA_KEY !== '');
+// ═══════════════════════════════════════════
+
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+var BRANCHES = [
+  {id:'B01',name:'Devarapalli',   depT:250, advT:270, opDep:911.45,  opAdv:1091.72},
+  {id:'B02',name:'Visakhapatnam', depT:300, advT:300, opDep:1079.84, opAdv:1352.75},
+  {id:'B03',name:'Gopalapatnam',  depT:170, advT:250, opDep:615.33,  opAdv:727.56},
+  {id:'B04',name:'Rajahmundry',   depT:250, advT:250, opDep:968.99,  opAdv:1011.44},
+  {id:'B05',name:'Sarpavaram',    depT:220, advT:300, opDep:814.07,  opAdv:1229.75},
+  {id:'B06',name:'Gajuwaka',      depT:400, advT:400, opDep:1466.80, opAdv:1733.09},
+  {id:'B07',name:'Kommadi',       depT:250, advT:350, opDep:991.97,  opAdv:1430.39},
+  {id:'B08',name:'Anakapalli',    depT:160, advT:230, opDep:597.00,  opAdv:924.26},
+  {id:'B09',name:'Tuni',          depT:150, advT:400, opDep:487.96,  opAdv:1713.41},
+  {id:'B10',name:'Duvvada',       depT:150, advT:400, opDep:557.79,  opAdv:1567.86},
+  {id:'B11',name:'Nidadavolu',    depT:200, advT:250, opDep:0,       opAdv:0}
+];
+
+var EMPLOYEES = [
+  // Devarapalli B01
+  {id:'784',  name:'KVVN Dinesh',              desig:'BM',       br:'B01',mob:'9701465975',role:'manager', depT:85, advT:95,  p26d:0,p26a:0},
+  {id:'498',  name:'K V N Prasad',             desig:'CRO',      br:'B01',mob:'9701465976',role:'employee',depT:63, advT:65,  p26d:0,p26a:0},
+  {id:'480',  name:'MLV Rambabu',              desig:'CSO',      br:'B01',mob:'9652311081',role:'employee',depT:51, advT:55,  p26d:0,p26a:0},
+  {id:'951',  name:'A Durgarao',               desig:'CSO',      br:'B01',mob:'9963519866',role:'employee',depT:51, advT:55,  p26d:0,p26a:0},
+  {id:'1040', name:'R Mani Kumar',             desig:'CSO',      br:'B01',mob:'9951619930',role:'employee',depT:30, advT:30,  p26d:0,p26a:0},
+  // Visakhapatnam B02
+  {id:'461',  name:'B Rama Rao',               desig:'BM',       br:'B02',mob:'8341664134',role:'manager', depT:105,advT:100, p26d:0,p26a:0},
+  {id:'533',  name:'T Sunil Kumar',            desig:'CRO',      br:'B02',mob:'8790578111',role:'employee',depT:75, advT:75,  p26d:0,p26a:0},
+  {id:'1059', name:'M Dhanush',                desig:'CSO',      br:'B02',mob:'9347699322',role:'employee',depT:45, advT:30,  p26d:0,p26a:0},
+  {id:'1038', name:'N Vasu Devarao',           desig:'CRO',      br:'B02',mob:'8247005202',role:'employee',depT:75, advT:75,  p26d:0,p26a:0},
+  {id:'936',  name:'M Appala Raju',            desig:'CSO',      br:'B02',mob:'9390337592',role:'employee',depT:45, advT:50,  p26d:0,p26a:0},
+  // Gopalapatnam B03
+  {id:'974',  name:'D Srinivas',               desig:'BM',       br:'B03',mob:'9963478201',role:'manager', depT:60, advT:90,  p26d:0,p26a:0},
+  {id:'942',  name:'M Bhaskar Teja',           desig:'CSO',      br:'B03',mob:'9014165594',role:'employee',depT:35, advT:45,  p26d:0,p26a:0},
+  {id:'956',  name:'S Chitti Kumar Reddy',     desig:'CRO',      br:'B03',mob:'9966268612',role:'employee',depT:40, advT:70,  p26d:0,p26a:0},
+  // Rajahmundry B04
+  {id:'539',  name:'K Appa Rao',               desig:'BM',       br:'B04',mob:'8790487201',role:'manager', depT:90, advT:90,  p26d:0,p26a:0},
+  {id:'818',  name:'B Narasinga Rao',          desig:'CRO',      br:'B04',mob:'9866486023',role:'employee',depT:60, advT:65,  p26d:0,p26a:0},
+  {id:'879',  name:'D Naga Siva Sai Kumar',    desig:'CRO',      br:'B04',mob:'7013814245',role:'employee',depT:60, advT:55,  p26d:0,p26a:0},
+  {id:'1006', name:'K M C Harshitha',          desig:'CSO',      br:'B04',mob:'7997835435',role:'employee',depT:40, advT:40,  p26d:0,p26a:0},
+  {id:'1042', name:'J Sunitha',                desig:'CSO',      br:'B04',mob:'6300823757',role:'employee',depT:30, advT:30,  p26d:0,p26a:0},
+  // Sarpavaram B05
+  {id:'823',  name:'Buravilli Prasad',         desig:'BM',       br:'B05',mob:'9963478205',role:'manager', depT:80, advT:100, p26d:0,p26a:0},
+  {id:'731',  name:'B Kameswari',              desig:'CSO',      br:'B05',mob:'9959684096',role:'employee',depT:45, advT:60,  p26d:0,p26a:0},
+  {id:'905',  name:'GDSSSR Subrahmanyam',      desig:'CSO',      br:'B05',mob:'9391362787',role:'employee',depT:45, advT:60,  p26d:0,p26a:0},
+  {id:'837',  name:'S Durga Prasad',           desig:'CRO',      br:'B05',mob:'9441016566',role:'employee',depT:50, advT:80,  p26d:0,p26a:0},
+  {id:'1050', name:'K Saranya',                desig:'CSO',      br:'B05',mob:'7075746876',role:'employee',depT:30, advT:30,  p26d:0,p26a:0},
+  // Gajuwaka B06
+  {id:'384',  name:'A Appalanaidu',            desig:'BM',       br:'B06',mob:'7093906178',role:'manager', depT:120,advT:120, p26d:0,p26a:0},
+  {id:'510',  name:'S Srinivasa Rao',          desig:'CSH',      br:'B06',mob:'9393268352',role:'employee',depT:100,advT:80,  p26d:0,p26a:0},
+  {id:'884',  name:'Avala Harshini',           desig:'CSO',      br:'B06',mob:'7287945741',role:'employee',depT:60, advT:60,  p26d:0,p26a:0},
+  {id:'1008', name:'N Sandya',                 desig:'CSO',      br:'B06',mob:'9392605581',role:'employee',depT:60, advT:60,  p26d:0,p26a:0},
+  {id:'527',  name:'N Venkat Rao',             desig:'CSH',      br:'B06',mob:'9133893991',role:'employee',depT:60, advT:80,  p26d:0,p26a:0},
+  {id:'1063', name:'A Venugopala Rao',         desig:'CRO',      br:'B06',mob:'9133737479',role:'employee',depT:45, advT:45,  p26d:0,p26a:0},
+  // Kommadi B07
+  {id:'521',  name:'Shaik Nazima Firdhoz',     desig:'BM',       br:'B07',mob:'7093906180',role:'manager', depT:90, advT:120, p26d:0,p26a:0},
+  {id:'831',  name:'B Ravali',                 desig:'CSO',      br:'B07',mob:'8978877341',role:'employee',depT:50, advT:70,  p26d:0,p26a:0},
+  {id:'873',  name:'Karnena Anuha',            desig:'CSO',      br:'B07',mob:'7702319861',role:'employee',depT:50, advT:70,  p26d:0,p26a:0},
+  {id:'893',  name:'Arikithota Hanish',        desig:'CRO',      br:'B07',mob:'8919302720',role:'employee',depT:60, advT:90,  p26d:0,p26a:0},
+  {id:'1060', name:'S Pavan Kumar',            desig:'CSO',      br:'B07',mob:'9381545132',role:'employee',depT:30, advT:30,  p26d:0,p26a:0},
+  // Anakapalli B08
+  {id:'459',  name:'U Tulasi Rao',             desig:'BM',       br:'B08',mob:'7331143301',role:'manager', depT:55, advT:80,  p26d:0,p26a:0},
+  {id:'963',  name:'S Uday Kumar',             desig:'CSO',      br:'B08',mob:'9640815142',role:'employee',depT:35, advT:46,  p26d:0,p26a:0},
+  {id:'987',  name:'M Chidvilas',              desig:'CSO',      br:'B08',mob:'7386692043',role:'employee',depT:35, advT:46,  p26d:0,p26a:0},
+  {id:'1023', name:'N Venkatesh',              desig:'CRO',      br:'B08',mob:'7981420206',role:'employee',depT:35, advT:58,  p26d:0,p26a:0},
+  {id:'1056', name:'K Nagaraju',               desig:'CSO',      br:'B08',mob:'8341685885',role:'employee',depT:25, advT:25,  p26d:0,p26a:0},
+  // Tuni B09
+  {id:'601',  name:'G Divya Raju',             desig:'BM',       br:'B09',mob:'7995574832',role:'manager', depT:55, advT:140, p26d:0,p26a:0},
+  {id:'990',  name:'Sk Eliyaz',                desig:'CRO',      br:'B09',mob:'7330370922',role:'employee',depT:35, advT:80,  p26d:0,p26a:0},
+  {id:'825',  name:'A Govind',                 desig:'CRO',      br:'B09',mob:'7995574836',role:'employee',depT:30, advT:100, p26d:0,p26a:0},
+  {id:'834',  name:'G Gowri Naidu',            desig:'CSO',      br:'B09',mob:'9505717227',role:'employee',depT:30, advT:80,  p26d:0,p26a:0},
+  {id:'1046', name:'N Keerthi',                desig:'CSO',      br:'B09',mob:'9000557426',role:'employee',depT:25, advT:25,  p26d:0,p26a:0},
+  // Duvvada B10
+  {id:'860',  name:'B Prasada Rao',            desig:'BM',       br:'B10',mob:'7386084055',role:'manager', depT:50, advT:140, p26d:0,p26a:0},
+  {id:'501',  name:'A Ramesh',                 desig:'CSO',      br:'B10',mob:'9347861350',role:'employee',depT:30, advT:80,  p26d:0,p26a:0},
+  {id:'482',  name:'R Vykunta Vasu',           desig:'CRO',      br:'B10',mob:'7995574837',role:'employee',depT:40, advT:100, p26d:0,p26a:0},
+  {id:'992',  name:'K Naga Lakshmi',           desig:'CSO',      br:'B10',mob:'9912719366',role:'employee',depT:30, advT:80,  p26d:0,p26a:0},
+  // Nidadavolu B11
+  {id:'219',  name:'K Srinivas',               desig:'BH',       br:'B11',mob:'9247558630',role:'manager', depT:90, advT:110, p26d:0,p26a:0},
+  {id:'767',  name:'D Lohith Kumar',           desig:'CSO',      br:'B11',mob:'7981871075',role:'employee',depT:70, advT:90,  p26d:0,p26a:0},
+  {id:'661',  name:'D Sai Sindhuja',           desig:'CSO',      br:'B11',mob:'6304955121',role:'employee',depT:40, advT:50,  p26d:0,p26a:0},
+  {id:'1047', name:'Sk Afraz',                 desig:'CSO',      br:'B11',mob:'9441044522',role:'employee',depT:30, advT:30,  p26d:0,p26a:0},
+  // Admin
+  {id:'ADMIN',name:'Head Office Admin',        desig:'HO',       br:'HO', mob:'9848000000',role:'admin',   depT:0,  advT:0,   p26d:0,p26a:0}
+];
+
+var PWD = {};
+EMPLOYEES.forEach(function(e){ PWD[e.id] = (e.role === 'admin') ? 'Admin@2027' : 'Bank@2027'; });
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+var CU = null;
+var NAV = [];
+var ENTRIES = [];
+
+// ═══════════════════════════════════════════
+// CLOUD STORAGE
+// ═══════════════════════════════════════════
+function cloudGet() {
+  if (!USE_CLOUD) { return Promise.resolve(null); }
+  return fetch(SUPA_URL + '/rest/v1/cb_entries?select=*&order=ts.asc', {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+  }).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+}
+
+function cloudPost(rec) {
+  if (!USE_CLOUD) { return Promise.resolve(); }
+  return fetch(SUPA_URL + '/rest/v1/cb_entries', {
+    method: 'POST',
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify(rec)
+  }).catch(function() {});
+}
+
+function cloudDeleteAll() {
+  if (!USE_CLOUD) { return Promise.resolve(); }
+  return fetch(SUPA_URL + '/rest/v1/cb_entries?dep=gte.0', {
+    method: 'DELETE',
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+  }).catch(function() {});
+}
+function cloudDeleteOne(id) {
+  if (!USE_CLOUD) { return Promise.resolve(); }
+  return fetch(SUPA_URL + '/rest/v1/cb_entries?id=eq.' + encodeURIComponent(id), {
+    method: 'DELETE',
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+  }).catch(function() {});
+}
+
+function localGet() { return JSON.parse(localStorage.getItem('cb_e') || '[]'); }
+function localSave(arr) { localStorage.setItem('cb_e', JSON.stringify(arr)); }
+
+function refreshCloud() {
+  cloudGet().then(function(rows) {
+    if (rows && rows.length >= 0) {
+      ENTRIES = rows;
+      localSave(rows);
+      var cur = NAV[NAV.length - 1];
+      if (cur) navigate(cur.page, cur.data, false);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function getEmp(id) { return EMPLOYEES.find(function(e) { return e.id === id; }); }
+function getBr(id) { return BRANCHES.find(function(b) { return b.id === id; }); }
+function getBrEmps(brId) { return EMPLOYEES.filter(function(e) { return e.br === brId && e.role !== 'admin'; }); }
+function today() { return new Date().toISOString().slice(0,10); }
+function fmtD(s) { if(!s) return ''; var p=s.split('-'); return p[2]+'-'+p[1]+'-'+p[0]; }
+function fmtT(ts) { if(!ts) return ''; try { return new Date(ts).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}); } catch(e) { return ''; } }
+function L(n) {
+  var v = +(n || 0);
+  var rupees = Math.round(v * 100000);
+  if (rupees === 0) return '0';
+  var s = rupees.toString();
+  if (s.length <= 3) return s;
+  var last3 = s.slice(-3);
+  var rest = s.slice(0, -3);
+  var parts = [];
+  while (rest.length > 2) { parts.unshift(rest.slice(-2)); rest = rest.slice(0, -2); }
+  if (rest.length > 0) parts.unshift(rest);
+  return parts.join(',') + ',' + last3;
+}
+function INI(nm) { return nm.trim().split(/\s+/).map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(); }
+function PCT(a,t) { return t ? Math.min(+(a/t*100).toFixed(1), 999.9) : 0; }
+function CLR(p) { return p>=75 ? 'var(--green)' : p>=50 ? 'var(--amber)' : 'var(--red)'; }
+function LBL(p) { return p>=100 ? 'Excellent' : p>=75 ? 'On Track' : p>=50 ? 'At Risk' : 'Critical'; }
+
+function empTot(id, type) {
+  var all = ENTRIES.filter(function(e){ return e.empId === id; });
+  var t = today(); var parts = t.split('-'); var y = parts[0]; var m = parts[1];
+  var FY = ['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02','2027-03'];
+  function sum(arr) { return arr.reduce(function(a,e){ return {dep: a.dep+(+e.dep||0), adv: a.adv+(+e.adv||0)}; }, {dep:0,adv:0}); }
+  if (type==='day') return sum(all.filter(function(e){ return e.date===t; }));
+  if (type==='week') { var w=new Date(); w.setDate(w.getDate()-7); return sum(all.filter(function(e){ return new Date(e.date)>=w; })); }
+  if (type==='month') return sum(all.filter(function(e){ return e.date.indexOf(y+'-'+m)===0; }));
+  if (type==='year') return sum(all.filter(function(e){ return FY.some(function(f){ return e.date.indexOf(f)===0; }); }));
+  return {dep:0,adv:0};
+}
+function brTot(brId, type) {
+  return getBrEmps(brId).reduce(function(t,e){ var v=empTot(e.id,type); return {dep:t.dep+v.dep,adv:t.adv+v.adv}; }, {dep:0,adv:0});
+}
+
+function prog(p,c) {
+  var col = c||CLR(p);
+  return '<div class="prog"><div class="prog-fill" style="width:'+Math.min(p,100)+'%;background:'+col+'"></div></div><div class="prog-lbl">'+p.toFixed(1)+'% achieved</div>';
+}
+function badge(p) { return '<span class="badge" style="background:'+CLR(p)+'">'+LBL(p)+'</span>'; }
+function circProgress(p) {
+  var r=50, c=2*Math.PI*r, fill=(Math.min(p,100)/100)*c, color=CLR(p);
+  return '<div class="circ-wrap"><div class="circ-svg-wrap"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="'+r+'" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/><circle cx="60" cy="60" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="10" stroke-dasharray="'+fill+' '+c+'" stroke-linecap="round"/></svg><div class="circ-inner"><div class="circ-pct" style="color:'+color+'">'+p.toFixed(1)+'%</div><div class="circ-lbl">Overall</div></div></div></div>';
+}
+function perfBlock(title,dT,aT,dA,aA) {
+  var dp=PCT(dA,dT), ap=PCT(aA,aT), op=(dp+ap)/2;
+  return '<div class="perf-card"><div class="ph"><span class="ph-title">'+title+'</span>'+badge(op)+'</div>'+
+    '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px;margin-bottom:10px">'+
+    '<div class="prow"><span class="pl">🏦 Deposit Target</span><span class="pv sv-gold">'+L(dT)+'</span></div>'+
+    '<div class="prow"><span class="pl">✅ Achieved</span><span class="pv sv-green">'+L(dA)+'</span></div>'+
+    '<div class="prow"><span class="pl">❌ Gap</span><span class="pv sv-red">'+L(Math.max(0,dT-dA))+'</span></div>'+prog(dp)+'</div>'+
+    '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px">'+
+    '<div class="prow"><span class="pl">💰 Advance Target</span><span class="pv sv-gold">'+L(aT)+'</span></div>'+
+    '<div class="prow"><span class="pl">✅ Achieved</span><span class="pv sv-green">'+L(aA)+'</span></div>'+
+    '<div class="prow"><span class="pl">❌ Gap</span><span class="pv sv-red">'+L(Math.max(0,aT-aA))+'</span></div>'+prog(ap)+'</div></div>';
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function navigate(page, data, push) {
+  if (push !== false) NAV.push({page:page, data:data});
+  updateTopbar();
+  document.getElementById('MC').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  setTimeout(function() {
+    if (page==='emp') renderEmp(data);
+    else if (page==='mgr') renderMgr();
+    else if (page==='mgrEmp') renderMgrEmp(data);
+    else if (page==='ho') renderHO();
+    else if (page==='hoBr') renderHOBranches();
+    else if (page==='hoBranch') renderHOBranch(data);
+    else if (page==='hoEmp') renderHOEmp(data);
+    else if (page==='hoDir') renderHODir();
+    else if (page==='hoAna') renderHOAna();
+    else if (page==='hoGap') renderHOGap();
+  }, 50);
+}
+function goBack() {
+  if (NAV.length <= 1) return;
+  NAV.pop();
+  var p = NAV[NAV.length-1];
+  navigate(p.page, p.data, false);
+}
+function updateTopbar() {
+  var cur = NAV[NAV.length-1];
+  var hasBack = NAV.length > 1;
+  var tbL = document.getElementById('tbL');
+  var tbR = document.getElementById('tbR');
+  if (!tbL) return;
+  tbL.innerHTML = (hasBack ? '<button class="back-btn" onclick="goBack()">&#8592;</button>' : '') +
+    '<div><div class="tb-title" id="tbT"></div><div class="tb-sub" id="tbS"></div></div>';
+  if (CU && CU.role==='admin') {
+    tbR.innerHTML = '<button class="btn-reset" onclick="openReset()">⚠️ Reset</button><button class="btn-logout" onclick="logout()">Logout</button>';
+  } else {
+    tbR.innerHTML = '<button class="btn-logout" onclick="logout()">Logout</button>';
+  }
+  var tt = document.getElementById('tbT'); var ts = document.getElementById('tbS');
+  if (!cur || !tt) return;
+  if (cur.page==='emp') { tt.textContent=CU.name.split(' ')[0]+"'s Dashboard"; ts.textContent=getBr(CU.br)?getBr(CU.br).name:''; }
+  else if (cur.page==='mgr') { tt.textContent='Branch Dashboard'; ts.textContent=getBr(CU.br)?getBr(CU.br).name:''; }
+  else if (cur.page==='mgrEmp') { var e=getEmp(cur.data); tt.textContent=e?e.name.split(' ')[0]:'Employee'; ts.textContent=e?e.desig:''; }
+  else if (cur.page==='ho') { tt.textContent='Head Office'; ts.textContent='All Branches'; }
+  else if (cur.page==='hoBr') { tt.textContent='All Branches'; ts.textContent='11 branches'; }
+  else if (cur.page==='hoBranch') { var b=getBr(cur.data); tt.textContent=b?b.name:'Branch'; ts.textContent=getBrEmps(cur.data).length+' members'; }
+  else if (cur.page==='hoEmp') { var e2=getEmp(cur.data); tt.textContent=e2?e2.name:'Employee'; ts.textContent=e2?e2.desig:''; }
+  else if (cur.page==='hoDir') { tt.textContent='Staff Directory'; ts.textContent=EMPLOYEES.filter(function(e){return e.role!=='admin';}).length+' staff'; }
+  else if (cur.page==='hoAna') { tt.textContent='Analytics'; ts.textContent='Rankings'; }
+  else if (cur.page==='hoGap') { tt.textContent='Gap Report'; ts.textContent='Critical performers'; }
+}
+
+// ═══════════════════════════════════════════
+// AUTH — 100% SYNCHRONOUS, NO ASYNC
+// ═══════════════════════════════════════════
+function login() {
+  var rawId = document.getElementById('uid').value.trim();
+  var pw = document.getElementById('upw').value;
+  var err = document.getElementById('lerr');
+  err.textContent = '';
+  if (!rawId || !pw) { err.textContent = 'Please enter Employee ID and Password.'; return; }
+  var id = rawId.toUpperCase();
+  var emp = getEmp(id) || getEmp(rawId);
+  if (!emp || PWD[emp.id] !== pw) { err.textContent = 'Invalid Employee ID or Password.'; return; }
+  // Credentials correct — login immediately
+  CU = emp;
+  localStorage.setItem('cb_s', emp.id);
+  ENTRIES = localGet();
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appShell').classList.remove('hidden');
+  NAV = [];
+  startApp();
+  // Load cloud data in background
+  if (USE_CLOUD) { setTimeout(refreshCloud, 500); }
+}
+
+function logout() {
+  localStorage.removeItem('cb_s');
+  CU = null; NAV = []; ENTRIES = [];
+  document.getElementById('appShell').classList.add('hidden');
+  document.getElementById('loginScreen').style.display = '';
+  document.getElementById('uid').value = '';
+  document.getElementById('upw').value = '';
+}
+
+function startApp() {
+  if (CU.role==='admin') navigate('ho', null);
+  else if (CU.role==='manager') navigate('mgr', null);
+  else navigate('emp', null);
+}
+
+// Always show login page on open — clear any saved session
+localStorage.removeItem('cb_s');
+
+// Auto-refresh every 30s from cloud
+setInterval(function() {
+  if (USE_CLOUD && CU) { refreshCloud(); }
+}, 30000);
+
+// Sync across tabs
+window.addEventListener('storage', function(e) {
+  if (e.key === 'cb_e' && CU) {
+    ENTRIES = localGet();
+    var cur = NAV[NAV.length-1];
+    if (cur) navigate(cur.page, cur.data, false);
+  }
+});
+
+// ═══════════════════════════════════════════
+// RESET (Admin only)
+// ═══════════════════════════════════════════
+function openReset() {
+  document.getElementById('DT').textContent = 'Reset All Data';
+  document.getElementById('DB').innerHTML = '<p style="font-size:13px;color:var(--muted);line-height:1.65">This deletes ALL entered performance data across all branches.<br><br><strong style="color:#e74c3c">Cannot be undone.</strong></p>';
+  var ok = document.getElementById('DOK');
+  ok.className = 'btn-danger'; ok.textContent = 'Delete All'; ok.onclick = doReset;
+  document.getElementById('DLG').classList.remove('hidden');
+}
+function doReset() {
+  closeDlg();
+  cloudDeleteAll().then(function() {
+    ENTRIES = []; localSave([]);
+    showToast('✅ All entries cleared');
+    var cur = NAV[NAV.length-1]; if (cur) navigate(cur.page, cur.data, false);
+  });
+}
+
+// ═══════════════════════════════════════════
+// DELETE SINGLE ENTRY (Undo)
+// ═══════════════════════════════════════════
+function confirmDeleteEntry(entryId, empId) {
+  var r = ENTRIES.find(function(e){ return e.id === entryId; });
+  if (!r) return;
+  document.getElementById('DT').textContent = 'Delete This Entry?';
+  document.getElementById('DB').innerHTML =
+    '<div class="drow"><span>Date</span><span style="color:var(--gold);font-weight:700">'+fmtD(r.date)+'</span></div>'+
+    '<div class="drow"><span>Deposits</span><span style="color:#27ae60;font-weight:700">'+L(r.dep)+'</span></div>'+
+    '<div class="drow"><span>Advances</span><span style="color:var(--gold);font-weight:700">'+L(r.adv)+'</span></div>'+
+    '<p style="font-size:12px;color:var(--muted);margin-top:12px">This entry will be permanently removed.</p>';
+  var ok = document.getElementById('DOK');
+  ok.className = 'btn-danger'; ok.textContent = '🗑️ Delete Entry';
+  ok.onclick = function() { closeDlg(); deleteEntry(entryId, empId); };
+  document.getElementById('DLG').classList.remove('hidden');
+}
+
+function deleteEntry(entryId, empId) {
+  ENTRIES = ENTRIES.filter(function(e){ return e.id !== entryId; });
+  localSave(ENTRIES);
+  cloudDeleteOne(entryId).then(function(){ localStorage.setItem('cb_upd', Date.now()); });
+  showToast('✅ Entry deleted');
+  renderEmpHist(empId);
+  var pz = document.getElementById('ePZ');
+  if (pz) {
+    var emp = getEmp(empId);
+    if (emp) { var ya = empTot(empId,'year'); pz.innerHTML = perfBlock('FY 2026-27',emp.depT,emp.advT,ya.dep,ya.adv); }
+  }
+}
+function closeDlg() {
+  document.getElementById('DLG').classList.add('hidden');
+  var ok = document.getElementById('DOK');
+  ok.className = 'btn-confirm'; ok.textContent = 'Save'; ok.onclick = null;
+}
+
+// ═══════════════════════════════════════════
+// SAVE ENTRY
+// ═══════════════════════════════════════════
+function saveEntry(empId, dep, adv) {
+  if (!dep && !adv) { showToast('Enter at least one value', '#D97706'); return; }
+  var rec = { id: Date.now().toString(), empId: empId, date: today(), ts: new Date().toISOString(), dep: dep, adv: adv };
+  ENTRIES.push(rec);
+  localSave(ENTRIES);
+  if (USE_CLOUD) { cloudPost(rec).then(function(){ localStorage.setItem('cb_upd', Date.now()); }); }
+  showToast('✅ Entry saved!');
+}
+function openEntryDlg(empId) {
+  var dep = Math.round((parseFloat(document.getElementById('eDep').value) || 0) / 100000 * 1e10) / 1e10;
+  var adv = Math.round((parseFloat(document.getElementById('eAdv').value) || 0) / 100000 * 1e10) / 1e10;
+  if (!dep && !adv) { showToast('Enter at least one value', '#D97706'); return; }
+  document.getElementById('DT').textContent = 'Confirm Entry';
+  document.getElementById('DB').innerHTML =
+    '<div class="drow"><span>Date</span><span style="color:var(--gold);font-weight:700">'+fmtD(today())+'</span></div>'+
+    '<div class="drow"><span>Deposits</span><span style="color:#27ae60;font-weight:700">'+L(dep)+'</span></div>'+
+    '<div class="drow"><span>Advances</span><span style="color:var(--gold);font-weight:700">'+L(adv)+'</span></div>';
+  var ok = document.getElementById('DOK');
+  ok.className = 'btn-confirm'; ok.textContent = 'Save';
+  ok.onclick = function() {
+    closeDlg();
+    saveEntry(empId, dep, adv);
+    var de = document.getElementById('eDep'); var ae = document.getElementById('eAdv');
+    if (de) de.value = ''; if (ae) ae.value = '';
+    var cur = NAV[NAV.length-1]; navigate(cur.page, cur.data, false);
+  };
+  document.getElementById('DLG').classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════
+// EMPLOYEE PAGE
+// ═══════════════════════════════════════════
+var empTab = 'daily';
+function renderEmp(data) {
+  var emp = data ? getEmp(data) : CU;
+  if (!emp) { document.getElementById('MC').innerHTML='<div class="empty">Not found.</div>'; return; }
+  var br = getBr(emp.br);
+  var mD=+(emp.depT/12).toFixed(2), mA=+(emp.advT/12).toFixed(2);
+  var dD=+(emp.depT/252).toFixed(2), dA=+(emp.advT/252).toFixed(2);
+  var canEnter = (CU.role==='employee' && CU.id===emp.id);
+  document.getElementById('MC').innerHTML =
+    '<div class="profile-card"><div class="avatar">'+INI(emp.name)+'</div>'+
+    '<div style="min-width:0"><div class="p-name">'+emp.name+'</div><div class="p-eid">Employee # '+emp.id+'</div>'+
+    '<div class="p-det"><span style="background:var(--accent);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">'+emp.desig+'</span> '+(br?br.name:emp.br)+'<br>📱 '+emp.mob+'</div></div></div>'+
+    '<div class="sec-lbl">FY 2026-27 Targets</div>'+
+    '<div class="tgrid">'+
+    '<div class="tcard"><div class="tl">Annual Deposit</div><div class="tv">'+L(emp.depT)+'</div><div class="ts">Full Year</div></div>'+
+    '<div class="tcard"><div class="tl">Annual Advance</div><div class="tv">'+L(emp.advT)+'</div><div class="ts">Full Year</div></div>'+
+    '<div class="tcard"><div class="tl">Monthly Deposit</div><div class="tv">'+L(mD)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Monthly Advance</div><div class="tv">'+L(mA)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Daily Deposit</div><div class="tv">'+L(dD)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Daily Advance</div><div class="tv">'+L(dA)+'</div></div></div>'+
+    (canEnter ?
+    '<div class="sec-lbl">Today\'s Entry — '+fmtD(today())+'</div>'+
+    '<div class="entry-form"><div class="ef-title">📥 Enter Today\'s Performance</div>'+
+    '<div class="erow"><div class="ef"><label>Deposits (₹ Amount)</label><input type="number" step="1" min="0" id="eDep" placeholder="e.g. 50000" inputmode="numeric"/></div>'+
+    '<div class="ef"><label>Advances (₹ Amount)</label><input type="number" step="1" min="0" id="eAdv" placeholder="e.g. 50000" inputmode="numeric"/></div></div>'+
+    '<p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px">Enter the actual ₹ amount &nbsp;·&nbsp; 1 Lakh = 1,00,000</p>'+
+    '<button class="btn-save" onclick="openEntryDlg(\''+emp.id+'\')">💾 Save Entry</button></div>' : '')+
+    '<div class="sec-lbl">Performance</div>'+
+    '<div class="tabs" id="eTabs">'+
+    '<div class="tab'+(empTab==='daily'?' active':'')+'" onclick="eTab(this,\'daily\',\''+emp.id+'\')">Daily</div>'+
+    '<div class="tab'+(empTab==='weekly'?' active':'')+'" onclick="eTab(this,\'weekly\',\''+emp.id+'\')">Weekly</div>'+
+    '<div class="tab'+(empTab==='monthly'?' active':'')+'" onclick="eTab(this,\'monthly\',\''+emp.id+'\')">Monthly</div>'+
+    '<div class="tab'+(empTab==='yearly'?' active':'')+'" onclick="eTab(this,\'yearly\',\''+emp.id+'\')">Yearly</div>'+
+    '<div class="tab'+(empTab==='yoy'?' active':'')+'" onclick="eTab(this,\'yoy\',\''+emp.id+'\')">Year-on-Year</div></div>'+
+    '<div id="ePZ"></div><div class="sec-lbl">History</div><div id="eHZ"></div>';
+  renderEmpPerf(emp); renderEmpHist(emp.id);
+}
+function renderEmpPerf(emp) {
+  var el = document.getElementById('ePZ'); if (!el) return;
+  var dD=+(emp.depT/252).toFixed(2), dA=+(emp.advT/252).toFixed(2);
+  var mD=+(emp.depT/12).toFixed(2), mA=+(emp.advT/12).toFixed(2);
+  var da=empTot(emp.id,'day'), wa=empTot(emp.id,'week'), ma=empTot(emp.id,'month'), ya=empTot(emp.id,'year');
+  if (empTab==='daily') el.innerHTML=perfBlock("Today",dD,dA,da.dep,da.adv);
+  else if (empTab==='weekly') el.innerHTML=perfBlock('This Week',dD*7,dA*7,wa.dep,wa.adv);
+  else if (empTab==='monthly') el.innerHTML=perfBlock('This Month',mD,mA,ma.dep,ma.adv);
+  else if (empTab==='yearly') el.innerHTML=perfBlock('FY 2026-27',emp.depT,emp.advT,ya.dep,ya.adv);
+  else {
+    var gd=ya.dep-emp.p26d, ga=ya.adv-emp.p26a;
+    el.innerHTML='<div class="perf-card"><div class="ph"><span class="ph-title">Year-on-Year</span></div>'+
+      '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px;margin-bottom:10px">'+
+      '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;text-transform:uppercase">Deposits</div>'+
+      '<div class="prow"><span class="pl">FY 2025-26 Closing</span><span class="pv">'+L(emp.p26d)+'</span></div>'+
+      '<div class="prow"><span class="pl">FY 2026-27 Target</span><span class="pv">'+L(emp.depT)+'</span></div>'+
+      '<div class="prow"><span class="pl">Achieved (YTD)</span><span class="pv sv-gold">'+L(ya.dep)+'</span></div>'+
+      '<div class="prow"><span class="pl">Growth</span><span class="pv" style="color:'+(gd>=0?'var(--green)':'var(--red)')+';">'+(gd>=0?'▲ +':'▼ ')+L(Math.abs(gd))+'</span></div></div>'+
+      '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px">'+
+      '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;text-transform:uppercase">Advances</div>'+
+      '<div class="prow"><span class="pl">FY 2025-26 Closing</span><span class="pv">'+L(emp.p26a)+'</span></div>'+
+      '<div class="prow"><span class="pl">FY 2026-27 Target</span><span class="pv">'+L(emp.advT)+'</span></div>'+
+      '<div class="prow"><span class="pl">Achieved (YTD)</span><span class="pv sv-gold">'+L(ya.adv)+'</span></div>'+
+      '<div class="prow"><span class="pl">Growth</span><span class="pv" style="color:'+(ga>=0?'var(--green)':'var(--red)')+';">'+(ga>=0?'▲ +':'▼ ')+L(Math.abs(ga))+'</span></div></div></div>';
+  }
+}
+function renderEmpHist(empId) {
+  var el = document.getElementById('eHZ'); if (!el) return;
+  var rows = ENTRIES.filter(function(e){ return e.empId===empId; }).sort(function(a,b){ return String(b.ts).localeCompare(String(a.ts)); }).slice(0,50);
+  if (!rows.length) { el.innerHTML='<div class="empty">No entries yet.</div>'; return; }
+  el.innerHTML = rows.map(function(r) {
+    var eid = (r.id||'').replace(/'/g,"\\'");
+    return '<div class="hist-item">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+      '<div class="hist-date">📅 '+fmtD(r.date)+' &nbsp; 🕐 '+fmtT(r.ts)+'</div>'+
+      '<button onclick="confirmDeleteEntry(\''+eid+'\',\''+empId+'\')" style="background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.4);color:#e74c3c;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0">🗑️ Delete</button>'+
+      '</div>'+
+      '<div class="hist-row">'+
+      '<div class="hist-val"><div class="hv sv-green">'+L(r.dep)+'</div><div class="hl">Deposits</div></div>'+
+      '<div class="hist-val"><div class="hv sv-gold">'+L(r.adv)+'</div><div class="hl">Advances</div></div>'+
+      '</div></div>';
+  }).join('');
+}
+function eTab(el, tab, empId) {
+  empTab=tab;
+  var tabs = document.querySelectorAll('#eTabs .tab');
+  for (var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+  el.classList.add('active');
+  renderEmpPerf(getEmp(empId));
+}
+
+// ═══════════════════════════════════════════
+// MANAGER PAGE
+// ═══════════════════════════════════════════
+var mgrTab = 'day';
+function renderMgr() {
+  var br=getBr(CU.br), emps=getBrEmps(CU.br), yT=brTot(CU.br,'year');
+  var dp=PCT(yT.dep,br.depT), ap=PCT(yT.adv,br.advT), op=(dp+ap)/2;
+  document.getElementById('MC').innerHTML =
+    '<div class="profile-card"><div class="avatar">'+INI(CU.name)+'</div>'+
+    '<div style="min-width:0"><div class="p-name">'+CU.name+'</div><div class="p-eid">Employee # '+CU.id+'</div>'+
+    '<div class="p-det"><span style="background:var(--gold);color:var(--navy);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:800">'+CU.desig+'</span> '+(br?br.name:'')+'<br>📱 '+CU.mob+'</div></div></div>'+
+    '<div class="sec-lbl">Branch Summary — '+(br?br.name:'')+'</div>'+
+    '<div class="sum-card">'+circProgress(op)+
+    '<div class="srow"><span class="sl">Opening Balance (31.03.26)</span><span class="sv sv-gold">'+L(br.opDep)+' Dep · '+L(br.opAdv)+' Adv</span></div>'+
+    '<div class="srow"><span class="sl">Annual Deposit Target</span><span class="sv">'+L(br.depT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Deposits Achieved (YTD)</span><span class="sv sv-green">'+L(yT.dep)+'</span></div>'+
+    '<div class="srow"><span class="sl">Deposit Gap</span><span class="sv sv-red">'+L(Math.max(0,br.depT-yT.dep))+'</span></div>'+
+    '<div class="srow"><span class="sl">Annual Advance Target</span><span class="sv">'+L(br.advT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Advances Achieved (YTD)</span><span class="sv sv-green">'+L(yT.adv)+'</span></div>'+
+    '<div class="srow"><span class="sl">Advance Gap</span><span class="sv sv-red">'+L(Math.max(0,br.advT-yT.adv))+'</span></div></div>'+
+    '<div class="sec-lbl">Performance</div>'+
+    '<div class="tabs" id="mTabs">'+
+    '<div class="tab'+(mgrTab==='day'?' active':'')+'" onclick="mTab(this,\'day\')">Today</div>'+
+    '<div class="tab'+(mgrTab==='month'?' active':'')+'" onclick="mTab(this,\'month\')">Monthly</div>'+
+    '<div class="tab'+(mgrTab==='year'?' active':'')+'" onclick="mTab(this,\'year\')">Yearly</div></div>'+
+    '<div id="mPZ"></div>'+
+    '<div class="sec-lbl">Team ('+emps.length+')</div>'+
+    emps.map(function(e){
+      var ya=empTot(e.id,'year'); var p=PCT((ya.dep+ya.adv)/2,(e.depT+e.advT)/2);
+      return '<div class="member-row" onclick="navigate(\'mgrEmp\',\''+e.id+'\')">'+
+        '<div class="m-avatar">'+INI(e.name)+'</div>'+
+        '<div class="m-info"><div class="m-name">'+e.name+'</div><div class="m-des">'+e.desig+' · EMP # '+e.id+'</div></div>'+
+        '<span class="badge" style="background:'+CLR(p)+';flex-shrink:0">'+p.toFixed(1)+'%</span></div>';
+    }).join('');
+  renderMgrPerf();
+}
+function renderMgrPerf() {
+  var el=document.getElementById('mPZ'); if (!el) return;
+  var br=getBr(CU.br), emps=getBrEmps(CU.br), t=brTot(CU.br,mgrTab);
+  var dT,aT;
+  if (mgrTab==='day'){dT=emps.reduce(function(s,e){return s+e.depT/252;},0);aT=emps.reduce(function(s,e){return s+e.advT/252;},0);}
+  else if (mgrTab==='month'){dT=emps.reduce(function(s,e){return s+e.depT/12;},0);aT=emps.reduce(function(s,e){return s+e.advT/12;},0);}
+  else{dT=br.depT;aT=br.advT;}
+  el.innerHTML=perfBlock(mgrTab==='day'?'Today':mgrTab==='month'?'This Month':'FY 2026-27',dT,aT,t.dep,t.adv);
+}
+function mTab(el,tab){mgrTab=tab;var ts=document.querySelectorAll('#mTabs .tab');for(var i=0;i<ts.length;i++)ts[i].classList.remove('active');el.classList.add('active');renderMgrPerf();}
+var mgrEmpTab = 'yearly';
+function renderMgrEmp(empId) {
+  var emp=getEmp(empId); if (!emp) return;
+  var br=getBr(emp.br);
+  var mD2=+(emp.depT/12).toFixed(2), mA2=+(emp.advT/12).toFixed(2);
+  var dD2=+(emp.depT/252).toFixed(2), dA2=+(emp.advT/252).toFixed(2);
+  document.getElementById('MC').innerHTML =
+    '<div class="profile-card"><div class="avatar">'+INI(emp.name)+'</div>'+
+    '<div style="min-width:0"><div class="p-name">'+emp.name+'</div><div class="p-eid">Employee # '+emp.id+'</div>'+
+    '<div class="p-det"><span style="background:var(--accent);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">'+emp.desig+'</span> '+(br?br.name:'')+'<br>📱 '+emp.mob+'</div></div></div>'+
+    '<div class="sec-lbl">FY 2026-27 Targets</div>'+
+    '<div class="tgrid">'+
+    '<div class="tcard"><div class="tl">Annual Deposit</div><div class="tv">'+L(emp.depT)+'</div><div class="ts">Full Year</div></div>'+
+    '<div class="tcard"><div class="tl">Annual Advance</div><div class="tv">'+L(emp.advT)+'</div><div class="ts">Full Year</div></div>'+
+    '<div class="tcard"><div class="tl">Monthly Deposit</div><div class="tv">'+L(mD2)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Monthly Advance</div><div class="tv">'+L(mA2)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Daily Deposit</div><div class="tv">'+L(dD2)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Daily Advance</div><div class="tv">'+L(dA2)+'</div></div></div>'+
+    '<div class="sec-lbl">Performance</div>'+
+    '<div class="tabs" id="meTabs">'+
+    '<div class="tab'+(mgrEmpTab==='daily'?' active':'')+'" onclick="meTab(this,\'daily\',\''+empId+'\')">Daily</div>'+
+    '<div class="tab'+(mgrEmpTab==='weekly'?' active':'')+'" onclick="meTab(this,\'weekly\',\''+empId+'\')">Weekly</div>'+
+    '<div class="tab'+(mgrEmpTab==='monthly'?' active':'')+'" onclick="meTab(this,\'monthly\',\''+empId+'\')">Monthly</div>'+
+    '<div class="tab'+(mgrEmpTab==='yearly'?' active':'')+'" onclick="meTab(this,\'yearly\',\''+empId+'\')">Yearly</div>'+
+    '<div class="tab'+(mgrEmpTab==='yoy'?' active':'')+'" onclick="meTab(this,\'yoy\',\''+empId+'\')">Year-on-Year</div></div>'+
+    '<div id="ePZ"></div>'+
+    '<div class="sec-lbl">Entry History</div><div id="eHZ"></div>'+
+    '<div class="edit-card"><h3>✏️ Add Entry for '+emp.name+'</h3>'+
+    '<div class="erow"><div class="ef"><label>Deposits (₹ Amount)</label><input type="number" step="1" min="0" id="mD" placeholder="e.g. 50000" inputmode="numeric"/></div>'+
+    '<div class="ef"><label>Advances (₹ Amount)</label><input type="number" step="1" min="0" id="mA" placeholder="e.g. 50000" inputmode="numeric"/></div></div>'+
+    '<p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px">Enter actual ₹ amount &nbsp;·&nbsp; 1 Lakh = 1,00,000</p>'+
+    '<button class="btn-save" onclick="mgrSave(\''+empId+'\')">💾 Save Entry</button></div>';
+  renderMgrEmpPerf(emp);
+  renderEmpHist(emp.id);
+}
+function renderMgrEmpPerf(emp) {
+  var el=document.getElementById('ePZ'); if (!el) return;
+  var dD=+(emp.depT/252).toFixed(2), dA=+(emp.advT/252).toFixed(2);
+  var mD=+(emp.depT/12).toFixed(2), mA=+(emp.advT/12).toFixed(2);
+  var da=empTot(emp.id,'day'), wa=empTot(emp.id,'week'), ma=empTot(emp.id,'month'), ya=empTot(emp.id,'year');
+  if (mgrEmpTab==='daily')       el.innerHTML=perfBlock('Today',dD,dA,da.dep,da.adv);
+  else if (mgrEmpTab==='weekly') el.innerHTML=perfBlock('This Week',dD*7,dA*7,wa.dep,wa.adv);
+  else if (mgrEmpTab==='monthly')el.innerHTML=perfBlock('This Month',mD,mA,ma.dep,ma.adv);
+  else if (mgrEmpTab==='yearly') el.innerHTML=perfBlock('FY 2026-27 Annual',emp.depT,emp.advT,ya.dep,ya.adv);
+  else {
+    var gd=ya.dep-emp.p26d, ga=ya.adv-emp.p26a;
+    el.innerHTML='<div class="perf-card"><div class="ph"><span class="ph-title">Year-on-Year</span></div>'+
+      '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px;margin-bottom:10px">'+
+      '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;text-transform:uppercase">Deposits</div>'+
+      '<div class="prow"><span class="pl">FY 2025-26 Closing</span><span class="pv">'+L(emp.p26d)+'</span></div>'+
+      '<div class="prow"><span class="pl">FY 2026-27 Target</span><span class="pv">'+L(emp.depT)+'</span></div>'+
+      '<div class="prow"><span class="pl">Achieved (YTD)</span><span class="pv sv-gold">'+L(ya.dep)+'</span></div>'+
+      '<div class="prow"><span class="pl">Growth</span><span class="pv" style="color:'+(gd>=0?'var(--green)':'var(--red)')+';">'+(gd>=0?'▲ +':'▼ ')+L(Math.abs(gd))+'</span></div></div>'+
+      '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px">'+
+      '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;text-transform:uppercase">Advances</div>'+
+      '<div class="prow"><span class="pl">FY 2025-26 Closing</span><span class="pv">'+L(emp.p26a)+'</span></div>'+
+      '<div class="prow"><span class="pl">FY 2026-27 Target</span><span class="pv">'+L(emp.advT)+'</span></div>'+
+      '<div class="prow"><span class="pl">Achieved (YTD)</span><span class="pv sv-gold">'+L(ya.adv)+'</span></div>'+
+      '<div class="prow"><span class="pl">Growth</span><span class="pv" style="color:'+(ga>=0?'var(--green)':'var(--red)')+';">'+(ga>=0?'▲ +':'▼ ')+L(Math.abs(ga))+'</span></div></div></div>';
+  }
+}
+function meTab(el, tab, empId) {
+  mgrEmpTab=tab;
+  var tabs=document.querySelectorAll('#meTabs .tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+  el.classList.add('active');
+  renderMgrEmpPerf(getEmp(empId));
+}
+function mgrSave(empId) {
+  var dep=Math.round((parseFloat(document.getElementById('mD').value)||0)/100000*1e10)/1e10;
+  var adv=Math.round((parseFloat(document.getElementById('mA').value)||0)/100000*1e10)/1e10;
+  saveEntry(empId,dep,adv);
+  if (dep||adv) { document.getElementById('mD').value=''; document.getElementById('mA').value='';
+    renderMgrEmpPerf(getEmp(empId));
+    renderEmpHist(empId); }
+}
+
+// ═══════════════════════════════════════════
+// HEAD OFFICE
+// ═══════════════════════════════════════════
+function renderHO() {
+  var bDT=0,bAT=0,bDY=0,bAY=0;
+  BRANCHES.forEach(function(b){bDT+=b.depT;bAT+=b.advT;var t=brTot(b.id,'year');bDY+=t.dep;bAY+=t.adv;});
+  var dp=PCT(bDY,bDT), ap=PCT(bAY,bAT), op=(dp+ap)/2;
+  var staff=EMPLOYEES.filter(function(e){return e.role!=='admin';});
+  document.getElementById('MC').innerHTML =
+    '<div class="stats-row">'+
+    '<div class="sbox"><div class="sv2">'+BRANCHES.length+'</div><div class="sl2">Branches</div></div>'+
+    '<div class="sbox"><div class="sv2">'+staff.length+'</div><div class="sl2">Staff</div></div>'+
+    '<div class="sbox"><div class="sv2" style="color:'+CLR(op)+'">'+op.toFixed(1)+'%</div><div class="sl2">Overall</div></div></div>'+
+    '<div class="sum-card" style="margin-top:10px">'+circProgress(op)+
+    '<div class="srow"><span class="sl">Total Deposit Target</span><span class="sv sv-gold">'+L(bDT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Total Deposits Achieved</span><span class="sv sv-green">'+L(bDY)+'</span></div>'+
+    '<div class="srow"><span class="sl">Total Deposit Gap</span><span class="sv sv-red">'+L(Math.max(0,bDT-bDY))+'</span></div>'+
+    '<div class="srow"><span class="sl">Deposit Achievement</span><span class="sv" style="color:'+CLR(dp)+'">'+dp.toFixed(1)+'%</span></div>'+
+    '<div class="srow"><span class="sl">Total Advance Target</span><span class="sv sv-gold">'+L(bAT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Total Advances Achieved</span><span class="sv sv-green">'+L(bAY)+'</span></div>'+
+    '<div class="srow"><span class="sl">Total Advance Gap</span><span class="sv sv-red">'+L(Math.max(0,bAT-bAY))+'</span></div>'+
+    '<div class="srow"><span class="sl">Advance Achievement</span><span class="sv" style="color:'+CLR(ap)+'">'+ap.toFixed(1)+'%</span></div></div>'+
+    '<div class="sec-lbl">Quick Access</div>'+
+    '<div class="nav-grid">'+
+    '<div class="nav-card" onclick="navigate(\'hoBr\',null)"><div class="nav-icon">🏦</div><div class="nav-title">All Branches</div><div class="nav-desc">11 branches</div></div>'+
+    '<div class="nav-card" onclick="navigate(\'hoDir\',null)"><div class="nav-icon">👥</div><div class="nav-title">Staff Directory</div><div class="nav-desc">'+staff.length+' employees</div></div>'+
+    '<div class="nav-card" onclick="navigate(\'hoAna\',null)"><div class="nav-icon">📊</div><div class="nav-title">Analytics</div><div class="nav-desc">Rankings</div></div>'+
+    '<div class="nav-card" onclick="navigate(\'hoGap\',null)"><div class="nav-icon">⚠️</div><div class="nav-title">Gap Report</div><div class="nav-desc">Critical performers</div></div></div>'+
+    '<div class="sec-lbl">Branch Status</div>'+
+    BRANCHES.map(function(b){
+      var yt=brTot(b.id,'year'); var dp2=PCT(yt.dep,b.depT),ap2=PCT(yt.adv,b.advT),op2=(dp2+ap2)/2;
+      var bm=getBrEmps(b.id).find(function(e){return e.desig==='BM'||e.desig==='BH';});
+      return '<div class="br-card" onclick="navigate(\'hoBranch\',\''+b.id+'\')">'+
+        '<div class="br-head"><div><div class="br-name">'+b.name+'</div><div class="br-mgr">'+(bm?bm.name:'')+'</div></div>'+
+        '<span class="badge" style="background:'+CLR(op2)+'">'+op2.toFixed(1)+'%</span></div>'+
+        '<div class="br-grid">'+
+        '<div class="br-stat"><div class="bl">Dep Target</div><div class="bv">'+L(b.depT)+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Dep Achieved</div><div class="bv sv-green">'+L(yt.dep)+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Adv Target</div><div class="bv">'+L(b.advT)+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Adv Achieved</div><div class="bv sv-green">'+L(yt.adv)+'</div></div></div>'+prog(op2)+'</div>';
+    }).join('');
+}
+
+function renderHOBranches() {
+  document.getElementById('MC').innerHTML = '<div class="sec-lbl">All 11 Branches</div>'+
+    BRANCHES.map(function(b){
+      var yt=brTot(b.id,'year'); var dp=PCT(yt.dep,b.depT),ap=PCT(yt.adv,b.advT),op=(dp+ap)/2;
+      var bm=getBrEmps(b.id).find(function(e){return e.desig==='BM'||e.desig==='BH';});
+      return '<div class="br-card" onclick="navigate(\'hoBranch\',\''+b.id+'\')">'+
+        '<div class="br-head"><div><div class="br-name">'+b.name+'</div><div class="br-mgr">'+(bm?bm.name:'')+' · '+getBrEmps(b.id).length+' staff</div></div>'+
+        '<span class="badge" style="background:'+CLR(op)+'">'+op.toFixed(1)+'%</span></div>'+
+        '<div class="br-grid">'+
+        '<div class="br-stat"><div class="bl">Deposit Target</div><div class="bv">'+L(b.depT)+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Achieved</div><div class="bv sv-green">'+L(yt.dep)+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Dep Gap</div><div class="bv sv-red">'+L(Math.max(0,b.depT-yt.dep))+'</div></div>'+
+        '<div class="br-stat"><div class="bl">Adv Gap</div><div class="bv sv-red">'+L(Math.max(0,b.advT-yt.adv))+'</div></div></div>'+prog(op)+'</div>';
+    }).join('');
+}
+
+function renderHOBranch(brId) {
+  var br=getBr(brId), emps=getBrEmps(brId), yt=brTot(brId,'year');
+  var dp=PCT(yt.dep,br.depT), ap=PCT(yt.adv,br.advT), op=(dp+ap)/2;
+  document.getElementById('MC').innerHTML =
+    '<div class="sum-card">'+circProgress(op)+
+    '<div class="srow"><span class="sl">Deposit Target</span><span class="sv">'+L(br.depT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Deposits Achieved</span><span class="sv sv-green">'+L(yt.dep)+'</span></div>'+
+    '<div class="srow"><span class="sl">Deposit Gap</span><span class="sv sv-red">'+L(Math.max(0,br.depT-yt.dep))+'</span></div>'+
+    '<div class="srow"><span class="sl">Advance Target</span><span class="sv">'+L(br.advT)+'</span></div>'+
+    '<div class="srow"><span class="sl">Advances Achieved</span><span class="sv sv-green">'+L(yt.adv)+'</span></div>'+
+    '<div class="srow"><span class="sl">Advance Gap</span><span class="sv sv-red">'+L(Math.max(0,br.advT-yt.adv))+'</span></div>'+
+    '<div class="srow"><span class="sl">Opening Balance</span><span class="sv sv-gold">'+L(br.opDep)+' Dep · '+L(br.opAdv)+' Adv</span></div></div>'+
+    '<div class="sec-lbl">Team ('+emps.length+')</div>'+
+    emps.map(function(e){
+      var ya=empTot(e.id,'year'); var p=PCT((ya.dep+ya.adv)/2,(e.depT+e.advT)/2);
+      return '<div class="member-row" onclick="navigate(\'hoEmp\',\''+e.id+'\')">'+
+        '<div class="m-avatar">'+INI(e.name)+'</div>'+
+        '<div class="m-info"><div class="m-name">'+e.name+'</div><div class="m-des">'+e.desig+' · EMP # '+e.id+'</div></div>'+
+        '<span class="badge" style="background:'+CLR(p)+';flex-shrink:0">'+p.toFixed(1)+'%</span></div>';
+    }).join('');
+}
+
+function renderHOEmp(empId) {
+  var emp=getEmp(empId); if (!emp) return;
+  var br=getBr(emp.br), ya=empTot(emp.id,'year');
+  document.getElementById('MC').innerHTML =
+    '<div class="profile-card"><div class="avatar">'+INI(emp.name)+'</div>'+
+    '<div style="min-width:0"><div class="p-name">'+emp.name+'</div><div class="p-eid">Employee # '+emp.id+'</div>'+
+    '<div class="p-det"><span style="background:var(--accent);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">'+emp.desig+'</span> '+(br?br.name:'')+'<br>📱 '+emp.mob+'</div></div></div>'+
+    '<div class="tgrid" style="margin-top:12px">'+
+    '<div class="tcard"><div class="tl">Annual Deposit</div><div class="tv">'+L(emp.depT)+'</div></div>'+
+    '<div class="tcard"><div class="tl">Annual Advance</div><div class="tv">'+L(emp.advT)+'</div></div>'+
+    '<div class="tcard"><div class="tl">FY25-26 Dep</div><div class="tv">'+L(emp.p26d)+'</div></div>'+
+    '<div class="tcard"><div class="tl">FY25-26 Adv</div><div class="tv">'+L(emp.p26a)+'</div></div></div>'+
+    '<div id="ePZ"></div><div id="eHZ"></div>'+
+    '<div class="edit-card"><h3>✏️ Add Entry for '+emp.name+'</h3>'+
+    '<div class="erow"><div class="ef"><label>Deposits (₹ Amount)</label><input type="number" step="1" min="0" id="hD" placeholder="e.g. 50000" inputmode="numeric"/></div>'+
+    '<div class="ef"><label>Advances (₹ Amount)</label><input type="number" step="1" min="0" id="hA" placeholder="e.g. 50000" inputmode="numeric"/></div></div>'+
+    '<p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px">Enter actual ₹ amount &nbsp;·&nbsp; 1 Lakh = 1,00,000</p>'+
+    '<button class="btn-save" onclick="hoSave(\''+empId+'\')">💾 Save Entry</button></div>';
+  document.getElementById('ePZ').innerHTML=perfBlock('FY 2026-27',emp.depT,emp.advT,ya.dep,ya.adv);
+  renderEmpHist(emp.id);
+}
+function hoSave(empId) {
+  var dep=Math.round((parseFloat(document.getElementById('hD').value)||0)/100000*1e10)/1e10;
+  var adv=Math.round((parseFloat(document.getElementById('hA').value)||0)/100000*1e10)/1e10;
+  saveEntry(empId,dep,adv);
+  if (dep||adv) { document.getElementById('hD').value=''; document.getElementById('hA').value='';
+    var emp=getEmp(empId); var ya=empTot(empId,'year');
+    document.getElementById('ePZ').innerHTML=perfBlock('FY 2026-27',emp.depT,emp.advT,ya.dep,ya.adv);
+    renderEmpHist(empId); }
+}
+
+function renderHODir() {
+  document.getElementById('MC').innerHTML =
+    '<input class="search-inp" id="dQ" placeholder="🔍 Search name or ID..." oninput="filterDir()" autocomplete="off"/>'+
+    '<div class="frow">'+
+    '<select class="fsel" id="dBr" onchange="filterDir()"><option value="">All Branches</option>'+
+    BRANCHES.map(function(b){return '<option value="'+b.id+'">'+b.name+'</option>';}).join('')+'</select>'+
+    '<select class="fsel" id="dDes" onchange="filterDir()"><option value="">All Roles</option>'+
+    ['BM','BH','CSO','CRO','CSH'].map(function(d){return '<option>'+d+'</option>';}).join('')+'</select></div>'+
+    '<div id="dL"></div>';
+  filterDir();
+}
+function filterDir() {
+  var q=(document.getElementById('dQ')?document.getElementById('dQ').value:'').toLowerCase();
+  var br=document.getElementById('dBr')?document.getElementById('dBr').value:'';
+  var des=document.getElementById('dDes')?document.getElementById('dDes').value:'';
+  var emps=EMPLOYEES.filter(function(e){return e.role!=='admin';});
+  if (q) emps=emps.filter(function(e){return e.name.toLowerCase().indexOf(q)>=0||e.id.toLowerCase().indexOf(q)>=0;});
+  if (br) emps=emps.filter(function(e){return e.br===br;});
+  if (des) emps=emps.filter(function(e){return e.desig===des;});
+  var el=document.getElementById('dL'); if (!el) return;
+  if (!emps.length) { el.innerHTML='<div class="empty">No employees found.</div>'; return; }
+  el.innerHTML=emps.map(function(e){
+    var ya=empTot(e.id,'year'); var p=PCT((ya.dep+ya.adv)/2,(e.depT+e.advT)/2); var b=getBr(e.br);
+    return '<div class="member-row" onclick="navigate(\'hoEmp\',\''+e.id+'\')">'+
+      '<div class="m-avatar">'+INI(e.name)+'</div>'+
+      '<div class="m-info"><div class="m-name">'+e.name+'</div><div class="m-des">'+e.desig+' · '+(b?b.name:'')+' · #'+e.id+'</div></div>'+
+      '<span class="badge" style="background:'+CLR(p)+';flex-shrink:0">'+p.toFixed(1)+'%</span></div>';
+  }).join('');
+}
+
+function renderHOAna() {
+  var ranked=EMPLOYEES.filter(function(e){return e.role!=='admin';}).map(function(e){
+    var ya=empTot(e.id,'year'); var p=PCT((ya.dep+ya.adv)/2,(e.depT+e.advT)/2); return Object.assign({},e,{ya:ya,p:p});
+  }).sort(function(a,b){return b.p-a.p;});
+  var brR=BRANCHES.map(function(b){
+    var yt=brTot(b.id,'year'); var dp=PCT(yt.dep,b.depT),ap=PCT(yt.adv,b.advT); return Object.assign({},b,{yt:yt,dp:dp,ap:ap,op:(dp+ap)/2});
+  }).sort(function(a,b){return b.op-a.op;});
+  document.getElementById('MC').innerHTML =
+    '<div class="sec-lbl">🏆 Employee Rankings</div>'+
+    ranked.map(function(e,i){
+      var b=getBr(e.br);
+      return '<div class="ana-row" onclick="navigate(\'hoEmp\',\''+e.id+'\')">'+
+        '<div class="ana-head"><div><div class="ana-name">#'+(i+1)+' '+e.name+(e.p>=100?' ⭐':'')+'</div>'+
+        '<div class="ana-branch">'+e.desig+' · '+(b?b.name:'')+' · EMP #'+e.id+'</div></div>'+
+        '<span class="badge" style="background:'+CLR(e.p)+'">'+e.p.toFixed(1)+'%</span></div>'+
+        '<div class="prow"><span class="pl">Deposits</span><span class="pv">'+L(e.ya.dep)+' / '+L(e.depT)+'</span></div>'+
+        '<div class="prow"><span class="pl">Advances</span><span class="pv">'+L(e.ya.adv)+' / '+L(e.advT)+'</span></div>'+prog(e.p)+'</div>';
+    }).join('')+
+    '<div class="sec-lbl" style="margin-top:16px">🏦 Branch Rankings</div>'+
+    brR.map(function(b,i){
+      return '<div class="ana-row" onclick="navigate(\'hoBranch\',\''+b.id+'\')">'+
+        '<div class="ana-head"><div><div class="ana-name">#'+(i+1)+' '+b.name+'</div>'+
+        '<div class="ana-branch">'+getBrEmps(b.id).length+' staff</div></div>'+
+        '<span class="badge" style="background:'+CLR(b.op)+'">'+b.op.toFixed(1)+'%</span></div>'+
+        '<div class="prow"><span class="pl">Deposits</span><span class="pv">'+L(b.yt.dep)+' / '+L(b.depT)+' ('+b.dp.toFixed(1)+'%)</span></div>'+
+        '<div class="prow"><span class="pl">Advances</span><span class="pv">'+L(b.yt.adv)+' / '+L(b.advT)+' ('+b.ap.toFixed(1)+'%)</span></div>'+prog(b.op)+'</div>';
+    }).join('');
+}
+
+function renderHOGap() {
+  var emps=EMPLOYEES.filter(function(e){return e.role!=='admin';}).map(function(e){
+    var ya=empTot(e.id,'year');
+    return Object.assign({},e,{ya:ya,dg:Math.max(0,e.depT-ya.dep),ag:Math.max(0,e.advT-ya.adv),p:PCT((ya.dep+ya.adv)/2,(e.depT+e.advT)/2)});
+  }).sort(function(a,b){return (b.dg+b.ag)-(a.dg+a.ag);});
+  document.getElementById('MC').innerHTML =
+    '<div class="sec-lbl">Employees — Highest Gap First</div>'+
+    emps.map(function(e){
+      var b=getBr(e.br);
+      return '<div class="ana-row" onclick="navigate(\'hoEmp\',\''+e.id+'\')">'+
+        '<div class="ana-head"><div><div class="ana-name">'+e.name+'</div><div class="ana-branch">'+e.desig+' · '+(b?b.name:'')+'</div></div>'+
+        '<span class="badge" style="background:'+CLR(e.p)+'">'+e.p.toFixed(1)+'%</span></div>'+
+        '<div class="prow"><span class="pl">Deposit Gap</span><span class="pv sv-red">'+L(e.dg)+'</span></div>'+
+        '<div class="prow"><span class="pl">Advance Gap</span><span class="pv" style="color:var(--amber)">'+L(e.ag)+'</span></div></div>';
+    }).join('')+
+    '<div class="sec-lbl" style="margin-top:16px">Branch Gap</div>'+
+    BRANCHES.map(function(b){
+      var yt=brTot(b.id,'year'); var dg=Math.max(0,b.depT-yt.dep),ag=Math.max(0,b.advT-yt.adv);
+      var op=(PCT(yt.dep,b.depT)+PCT(yt.adv,b.advT))/2;
+      return '<div class="ana-row" onclick="navigate(\'hoBranch\',\''+b.id+'\')">'+
+        '<div class="ana-head"><div class="ana-name">'+b.name+'</div><span class="badge" style="background:'+CLR(op)+'">'+op.toFixed(1)+'%</span></div>'+
+        '<div class="prow"><span class="pl">Deposit Gap</span><span class="pv sv-red">'+L(dg)+'</span></div>'+
+        '<div class="prow"><span class="pl">Advance Gap</span><span class="pv" style="color:var(--amber)">'+L(ag)+'</span></div></div>';
+    }).join('');
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg, color) {
+  var c = color || '#1A7A4A';
+  var el = document.querySelectorAll('.toast');
+  for (var i=0;i<el.length;i++) el[i].parentNode.removeChild(el[i]);
+  var t = document.createElement('div');
+  t.className='toast'; t.textContent=msg; t.style.background=c; t.style.color='#fff';
+  document.body.appendChild(t);
+  setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 3000);
+}
+</script>
+</body>
+</html>
